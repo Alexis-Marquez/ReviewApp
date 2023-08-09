@@ -3,7 +3,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const Bussiness = require('./models/Businesses');
 
-mongoose.connect('mongodb://127.0.0.1:27017/camps',{
+mongoose.connect('mongodb://127.0.0.1:27017/reviews',{
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
@@ -26,13 +26,7 @@ app.listen(3000, ()=>{
 app.get('/',(req, res)=>{
     res.render('home');
 })
-app.get('/Bussinesss',async (req, res)=>{
-    const Bussinesss = await Bussiness.find();
-    res.render('Bussinesss/index');
-})
-
-app.get('/makeBussiness', async (req, res)=>{
-    const bussiness = new Bussiness({title: 'back'})
-    await bussiness.save();
-    res.send(bussiness);
+app.get('/Bussiness',async (req, res)=>{
+    const places = await Bussiness.find({});
+    res.render('Bussiness/index', {places});
 })

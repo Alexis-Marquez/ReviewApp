@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const BussinessSchema = new Schema({
-    title: String,
+    name: String,
     category: String,
     description: String, 
     location: String,
-    price: number
+    price: Number
 });
 
-module.exports = mongoose.model('Campground', BussinessSchema);
+module.exports = mongoose.model('Bussiness', BussinessSchema);
