@@ -1,9 +1,9 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-const Bussiness = require('./models/Businesses');
+const Bussiness = require('./models/Businesses'); //name of model: Bussiness
 
-mongoose.connect('mongodb://127.0.0.1:27017/reviews',{
+mongoose.connect('mongodb://127.0.0.1:27017/reviews',{ //name of database: reviews
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
@@ -26,7 +26,7 @@ app.listen(3000, ()=>{
 app.get('/',(req, res)=>{
     res.render('home');
 })
-app.get('/Bussiness',async (req, res)=>{
-    const places = await Bussiness.find({});
-    res.render('Bussiness/index', {places});
+app.get('/Places',async (req, res)=>{ //Index page
+    const places = await Bussiness.find({}); //name of model: Bussiness
+    res.render('Places/index', {places});
 })
