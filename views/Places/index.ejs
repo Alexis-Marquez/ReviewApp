@@ -7,9 +7,12 @@
 </head>
 <body>
     <h1>All Bussinesses</h1>
+    <div>
+        <a href="/Places/new">Add Bussiness</a>
+    </div>
     <ul>
         <% for(let place of places) {%>
-        <li><%=place.name%></li>
+        <li><a href="Places/<%= place.id %>"><%=place.name%></a></li>
         <% } %>
     </ul>
 </body>

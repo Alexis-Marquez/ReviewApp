@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a new bussiness</title>
+</head>
+<body>
+    <form action="/Places" method="POST">
+        <div>
+            <label for="name">Bussiness Name</label>
+            <input id="name" type="text" name="bussiness[name]">
+        </div>
+        <div>
+            <label for="location">Location (City, State)</label>
+            <input id="location" type="text" name="bussiness[location]">
+        </div>
+        <button>Add Bussiness</button>
+    </form>
+    <a href="/Places">Cancel</a>
+</body>
+</html>

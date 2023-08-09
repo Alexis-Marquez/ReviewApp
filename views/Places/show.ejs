@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show</title>
+</head>
+<body>
+    <h1><%= place.name %></h1>
+    <h2><%= place.location %></h2>
+    <form action="/places/<%= place.id %>?_method=Delete" method="post">
+    <button>Delete</button></form>
+    <footer>
+        <a href="/places/<%= place.id %>/edit">Edit Bussiness</a>
+        <a href="/Places">Home</a>
+    </footer>
+</body>
+</html>

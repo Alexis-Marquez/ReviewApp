@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Bussiness</title>
+</head>
+<body>
+    <h1>Edit Bussiness</h1>
+    <form action="/Places/<%= place.id %>?_method=PUT" method="POST">
+        <div>
+            <label for="name">Bussiness Name</label>
+            <input id="name" type="text" name="bussiness[name]" value="<%= place.name %>">
+        </div>
+        <div>
+            <label for="location">Location (City, State)</label>
+            <input id="location" type="text" name="bussiness[location]" value="<%= place.location %>">
+        </div>
+        <button>Submit</button>
+    </form>
+    <a href="/Places/<%= place._id %>">Cancel</a>
+</body>
+</html>
