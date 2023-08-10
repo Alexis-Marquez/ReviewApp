@@ -1,23 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Bussiness</title>
-</head>
-<body>
-    <h1>Edit Bussiness</h1>
-    <form action="/Places/<%= place.id %>?_method=PUT" method="POST">
-        <div>
-            <label for="name">Bussiness Name</label>
-            <input id="name" type="text" name="bussiness[name]" value="<%= place.name %>">
-        </div>
-        <div>
-            <label for="location">Location (City, State)</label>
-            <input id="location" type="text" name="bussiness[location]" value="<%= place.location %>">
-        </div>
-        <button>Submit</button>
-    </form>
+<% layout('layouts/Boilerplate') %>
     <a href="/Places/<%= place._id %>">Cancel</a>
-</body>
-</html>
+
+    <div class="row">
+        <h1 class="text-center">Edit Place</h1>
+        <div class="col-6 offset-3">
+            <form action="/Places/<%= place.id %>?_method=PUT" method="POST">
+            <div class="mb-3">
+                <label class="form-label" for="name">Bussiness Name</label>
+                <input class="form-control" id="name" type="text" name="bussiness[name]" value="<%= place.name %>">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="location">Location (City, State)</label>
+                <input class="form-control" id="location" type="text" name="bussiness[location]" value="<%= place.location %>">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="image">Image URL</label>
+                <input class="form-control" id="image" type="text" name="bussiness[image]" value="<%= place.image %>">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="description">Description</label>
+                <textarea class="form-control" id="description" type="text" name="bussiness[description]"><%= place.description %></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="price">Prices(Optional)</label>
+            <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input id="price" type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="bussiness[price]" value="<%= place.price %>">
+                <span class="input-group-text">.00</span>
+              </div>
+            </div>
+            <div class="mb-3">
+            <button class="btn btn-info">Update Bussiness</button>
+        </div>
+        </form>
+        <a href="/Places">Cancel</a></div>
+    </div>

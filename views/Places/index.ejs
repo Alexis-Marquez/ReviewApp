@@ -1,19 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bussinesses</title>
-</head>
-<body>
+<% layout('/layouts/Boilerplate') %>
     <h1>All Bussinesses</h1>
-    <div>
-        <a href="/Places/new">Add Bussiness</a>
-    </div>
-    <ul>
+    <div></div>
         <% for(let place of places) {%>
-        <li><a href="Places/<%= place.id %>"><%=place.name%></a></li>
+            <div class="card mb-3">
+                <div class="col-md-4">
+                    <img class="img-fluid" src="<%= place.image %>" >
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= place.name %>
+                        </h5>
+                    <p class="card-text"><%= place.category %></p>
+                    <small class="text-muted"><%= place.location %></small>
+                    <a class="btn btn-primary" href="/places/<%= place.id %>">Details</a>
+                    </div>
+                </div>
+
         <% } %>
-    </ul>
-</body>
-</html>

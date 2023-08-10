@@ -1,22 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add a new bussiness</title>
-</head>
-<body>
-    <form action="/Places" method="POST">
-        <div>
-            <label for="name">Bussiness Name</label>
-            <input id="name" type="text" name="bussiness[name]">
+<% layout('layouts/Boilerplate') %>
+    <div class="row">
+        <h1 class="text-center">New Place</h1>
+        <div class="col-6 offset-3">
+            <form action="/Places" method="POST">
+            <div class="mb-3">
+                <label class="form-label" for="name">Bussiness Name</label>
+                <input class="form-control" id="name" type="text" name="bussiness[name]">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="location">Location (City, State)</label>
+                <input class="form-control" id="location" type="text" name="bussiness[location]">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="image">Image URL</label>
+                <input class="form-control" id="image" type="text" name="bussiness[image]">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="description">Description</label>
+                <textarea class="form-control" id="description" type="text" name="bussiness[description]"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="price">Prices(Optional)</label>
+            <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input id="price" type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="bussiness[price]">
+                <span class="input-group-text">.00</span>
+              </div>
+            </div>
+            <div class="mb-3">
+            <button class="btn btn-success">Add Bussiness</button>
         </div>
-        <div>
-            <label for="location">Location (City, State)</label>
-            <input id="location" type="text" name="bussiness[location]">
-        </div>
-        <button>Add Bussiness</button>
-    </form>
-    <a href="/Places">Cancel</a>
-</body>
-</html>
+        </form>
+        <a href="/Places">Cancel</a></div>
+    </div>
