@@ -2,34 +2,43 @@
     <div class="row">
         <h1 class="text-center">New Place</h1>
         <div class="col-6 offset-3">
-            <form action="/Places" method="POST">
+            <form action="/Places" method="POST" novalidate class="needs-validation">
             <div class="mb-3">
                 <label class="form-label" for="name">Bussiness Name</label>
-                <input class="form-control" id="name" type="text" name="bussiness[name]">
+                <input class="form-control" id="name" type="text" name="bussiness[name]" required>
+                <div class="valid-feedback">Looks Good</div>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="location">Location (City, State)</label>
-                <input class="form-control" id="location" type="text" name="bussiness[location]">
+                <input class="form-control" id="location" type="text" name="bussiness[location]" required>
             </div>
+            <select name="bussiness[category]" class="form-select" aria-label="Default select example" required>
+                <option selected>Select Category</option>
+                <% for(let category of categories){ %>
+                <option  value="<%= category %>"><%= category %></option>
+                <% } %>
+              </select>
             <div class="mb-3">
                 <label class="form-label" for="image">Image URL</label>
                 <input class="form-control" id="image" type="text" name="bussiness[image]">
             </div>
             <div class="mb-3">
                 <label class="form-label" for="description">Description</label>
-                <textarea class="form-control" id="description" type="text" name="bussiness[description]"></textarea>
+                <textarea class="form-control" id="description" type="text" name="bussiness[description]" required></textarea>
             </div>
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <label class="form-label" for="price">Prices(Optional)</label>
             <div class="input-group">
                 <span class="input-group-text">$</span>
                 <input id="price" type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="bussiness[price]">
                 <span class="input-group-text">.00</span>
               </div>
-            </div>
+            </div> -->
             <div class="mb-3">
             <button class="btn btn-success">Add Bussiness</button>
         </div>
         </form>
         <a href="/Places">Cancel</a></div>
     </div>
+
+ 

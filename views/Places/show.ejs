@@ -1,10 +1,26 @@
 <% layout('layouts/Boilerplate') %>
-    <h1><%= place.name %></h1>
-    <h2><%= place.location %></h2>
-    <img class="w-50 mx-auto" src="<%= place.image %>" alt="">
-    <form action="/places/<%= place.id %>?_method=Delete" method="post">
-    <button>Delete</button></form>
-    <footer>
-        <a href="/places/<%= place.id %>/edit">Edit Bussiness</a>
-        <a href="/Places">Home</a>
-    </footer>
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="card">
+                <img src="<%= place.image %>" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"><%= place.name %></h5>
+                  <p class="card-text"><%= place.description %></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item text-center"><%= place.location %></li>
+                  <li class="list-group-item text-center"><%= place.category %></li>
+                  <% if(place.price){ %>
+                  <li class="list-group-item text-center"><%= place.price %></li>
+                  <% } %>
+                </ul>
+                <div class="card-body text-center">
+                  <a href="/places/<%= place.id %>/edit" class="card-link btn btn-primary">Edit Bussiness</a>
+                  <a href="/Places" class=" btn btn-info">Back</a>
+                  <form class="d-inline" action="/places/<%= place.id %>?_method=Delete" method="post">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+                </div>
+              </div>
+        </div>
+    </div>

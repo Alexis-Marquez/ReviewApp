@@ -1,8 +1,8 @@
 <% layout('/layouts/Boilerplate') %>
     <h1>All Bussinesses</h1>
-    <div></div>
         <% for(let place of places) {%>
             <div class="card mb-3">
+                <div class="row">
                 <div class="col-md-4">
                     <img class="img-fluid" src="<%= place.image %>" >
                 </div>
@@ -16,5 +16,6 @@
                     <a class="btn btn-primary" href="/places/<%= place.id %>">Details</a>
                     </div>
                 </div>
-
+                </div>
+            </div>
         <% } %>

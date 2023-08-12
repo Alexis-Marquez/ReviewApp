@@ -1,37 +1,47 @@
 <% layout('layouts/Boilerplate') %>
-    <a href="/Places/<%= place._id %>">Cancel</a>
 
     <div class="row">
         <h1 class="text-center">Edit Place</h1>
         <div class="col-6 offset-3">
-            <form action="/Places/<%= place.id %>?_method=PUT" method="POST">
+            <form action="/Places/<%= place.id %>?_method=PUT" method="POST" novalidate class="needs-validation">
             <div class="mb-3">
                 <label class="form-label" for="name">Bussiness Name</label>
-                <input class="form-control" id="name" type="text" name="bussiness[name]" value="<%= place.name %>">
+                <input class="form-control" id="name" type="text" name="bussiness[name]" value="<%= place.name %>"required>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="location">Location (City, State)</label>
-                <input class="form-control" id="location" type="text" name="bussiness[location]" value="<%= place.location %>">
+                <input class="form-control" id="location" type="text" name="bussiness[location]" value="<%= place.location %>"required>
             </div>
+            <select name="bussiness[category]" class="form-select" aria-label="Default select example"required>
+                <option selected>Select Category</option>
+                <% for(let category of categories){ %>
+                <option  value="<%= category %>"<% if(category === place.category){%> <%='selected'%><% } %>><%= category %></option>
+                <% } %>
+              </select>
             <div class="mb-3">
                 <label class="form-label" for="image">Image URL</label>
-                <input class="form-control" id="image" type="text" name="bussiness[image]" value="<%= place.image %>">
+                <input class="form-control" id="image" type="text" name="bussiness[image]" value="<%= place.image %>"required>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="description">Description</label>
-                <textarea class="form-control" id="description" type="text" name="bussiness[description]"><%= place.description %></textarea>
+                <textarea required class="form-control" id="description" type="text" name="bussiness[description]"><%= place.description %></textarea>
             </div>
+            <% if(place.category === 'Hotel'||place.category==='Gas Station'){ %>
             <div class="mb-3">
                 <label class="form-label" for="price">Prices(Optional)</label>
             <div class="input-group">
                 <span class="input-group-text">$</span>
+                
                 <input id="price" type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="bussiness[price]" value="<%= place.price %>">
+                
                 <span class="input-group-text">.00</span>
               </div>
             </div>
+            <% } %>
             <div class="mb-3">
             <button class="btn btn-info">Update Bussiness</button>
         </div>
         </form>
         <a href="/Places">Cancel</a></div>
     </div>
+   
