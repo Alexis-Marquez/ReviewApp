@@ -2,11 +2,13 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const Bussiness = require('./models/Businesses'); //name of model: Bussiness
+const Review = require('./models/review');
 const methodOverride = require('method-override')
 const ejsMate = require('ejs-mate')
 const ExpressError = require('./utils/ExpressError');
 const catchAsync = require("./utils/catchAsync");
 const joi = require('joi');
+const { platform } = require('os');
 
 mongoose.connect('mongodb://127.0.0.1:27017/reviews',{ //name of database: reviews
     useNewUrlParser: true,
@@ -65,6 +67,23 @@ const validatePlace = (req,res,next)=>{ //might move to different file
     }
 }
 
+const validateReview= (req,res,next)=>{ //might move to different file
+    const reviewSchema = joi.object({
+        review: joi.object({
+            rating:joi.number().required(),
+            body: joi.string().required(),
+        }).required()
+    }) //joi schema for validations
+    const {error} = reviewSchema.validate(req.body)
+    if(error){
+        const msg = error.details.map(el=> el.message).join(',');
+        throw new ExpressError(msg, 400)
+    }
+    else{
+        next();
+    }
+}
+
 app.post('/Places', validatePlace, catchAsync(async(req,res, next)=>{
     //if(!req.body.bussiness) throw new ExpressError("Invalid Place Data", 400)
     
@@ -72,6 +91,7 @@ app.post('/Places', validatePlace, catchAsync(async(req,res, next)=>{
     await place.save();
     res.redirect(`/Places/${place.id}`);
     }))
+
 app.get('/Places/:id/edit', catchAsync(async(req, res, next)=>{
     const place = await Bussiness.findById(req.params.id)
     res.render('Places/edit', {place, categories}) 
@@ -84,9 +104,26 @@ app.put('/places/:id', validatePlace, catchAsync(async(req,res)=>{
 }))
 
 app.get('/Places/:id', catchAsync(async(req, res)=>{
-    const place = await Bussiness.findById(req.params.id)
+    const place = await Bussiness.findById(req.params.id).populate('reviews')
     res.render('Places/show', {place})
 }))
+
+app.post('/Places/:id/reviews', validateReview, catchAsync(async(req,res)=>{
+    const place = await Bussiness.findById(req.params.id);
+    const review = new Review(req.body.review);
+    place.reviews.push(review);
+    await review.save();
+    await place.save();
+    res.redirect(`/places/${place._id}`);
+}))
+
+app.delete('/places/:id/reviews/:reviewId', catchAsync(async(req, res)=>{
+    const{id, reviewId} = req.params
+    await Bussiness.findByIdAndUpdate(id, {$pull:{reviews:reviewId}}) //looks for the references in the reviews array and deletes them
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/places/${id}`)
+}))
+
 app.all('*', (req,res,next)=>{ //runs when the path doesn't match any previous one
     next(new ExpressError('Page not found', 404))
 })
