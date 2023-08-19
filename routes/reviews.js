@@ -28,6 +28,7 @@ router.post('/', validateReview, catchAsync(async(req,res)=>{
     place.reviews.push(review);
     await review.save();
     await place.save();
+    req.flash('success',`Successfully created a new review for ${place.name}`)
     res.redirect(`/places/${place._id}`);
 }))
 
@@ -35,6 +36,7 @@ router.delete('/:reviewId', catchAsync(async(req, res)=>{
     const{id, reviewId} = req.params
     await Bussiness.findByIdAndUpdate(id, {$pull:{reviews:reviewId}}) //looks for the references in the reviews array and deletes them
     await Review.findByIdAndDelete(reviewId);
+    req.flash('success',`Successfully deleted review`)
     res.redirect(`/places/${id}`)
 }))
 

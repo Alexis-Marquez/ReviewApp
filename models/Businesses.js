@@ -17,16 +17,14 @@ const BussinessSchema = new Schema({
     ]
 });
 
-BussinessSchema.post('findOneAndDelete', async function(doc){
+BussinessSchema.post('findOneAndDelete', async function(doc){ // mongoose middleware that deletes all reviews under a deleted place
     if(doc){
         await Review.deleteMany({
             _id:{
                 $in: doc.reviews
             }
         })
-        console.log('yes')
     }
-    console.log('no')
 })
 
 module.exports = mongoose.model('Bussiness', BussinessSchema);
