@@ -4,6 +4,7 @@ const ExpressError = require('../utils/ExpressError');
 const catchAsync = require("../utils/catchAsync");
 const joi = require('joi');
 const Bussiness = require('../models/Businesses'); //name of model: Bussiness
+const isLoggedIn = require('../utils/middleware')
 
 const categories = ['Restaurant', 'Hotel', 'Gas Station', 'Apparel Store', 'Grocery Store'];
 
@@ -38,11 +39,11 @@ router.delete('/:id', catchAsync(async(req, res, next)=>{
     res.redirect('/Places');
     }))
 
-router.get('/new',(req, res)=>{
+router.get('/new',isLoggedIn, (req, res)=>{
     res.render('Places/new',{categories});
 })
 
-router.post('/', validatePlace, catchAsync(async(req,res, next)=>{
+router.post('/', isLoggedIn, validatePlace, catchAsync(async(req,res, next)=>{
     const place = new Bussiness(req.body.bussiness)
     await place.save();
     req.flash('success', 'Successfully created a new place!');
@@ -73,5 +74,7 @@ router.get('/:id', catchAsync(async(req, res)=>{
     }
     res.render('Places/show', {place})
 }))
+
+
 
 module.exports = router;

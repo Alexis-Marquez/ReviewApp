@@ -6,9 +6,13 @@ const ejsMate = require('ejs-mate');
 const session = require('express-session');
 const flash = require('connect-flash');
 const ExpressError = require('./utils/ExpressError');
+const passport = require('passport');
+const passportLocal = require('passport-local');
 
-const places = require('./routes/places');
-const reviews = require('./routes/reviews');
+const placesRoutes = require('./routes/places');
+const reviewsRoutes = require('./routes/reviews');
+const userRoutes = require('./routes/users')
+const user = require('./models/user')
 
 mongoose.connect('mongodb://127.0.0.1:27017/reviews',{ //name of database: reviews
     useNewUrlParser: true,
@@ -28,7 +32,6 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(methodOverride('_method'))
 app.use(express.urlencoded({extended:true}));
 
-
 const sessionCongif = {
     secret: 'this',
     resave: false,
@@ -39,15 +42,25 @@ const sessionCongif = {
         httpOnly: true
     }
 }
-app.use(session(sessionCongif));
-app.use(flash());
+app.use(session(sessionCongif)); //has to be before passport.session
+
+app.use(passport.initialize());
+app.use(passport.session()); //used for persistent login sessions
+passport.use(new passportLocal(user.authenticate())); //authentication method
+passport.serializeUser(user.serializeUser());
+passport.deserializeUser(user.deserializeUser());
+
+app.use(flash());//flash messages
+
 app.use((req,res,next)=>{
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
 })
-app.use('/places', places);
-app.use('/places/:id/reviews', reviews);
+app.use('/places', placesRoutes);
+app.use('/places/:id/reviews', reviewsRoutes);
+app.use('/', userRoutes);
 
 app.use(express.static(path.join(__dirname,'public')));
 

@@ -10,12 +10,23 @@
             <a class="nav-link" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/places">All Places</a>
+            <a class="nav-link text-light" href="/places">All Places</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/Places/new">Add a Bussiness</a>
           </li>
-        </ul>
-      </div>
+          <% if(!currentUser) {%>
+          <li>
+            <a class="nav-link text-success" href="/login">Login</a>
+          </li>
+          <li>
+            <a class="nav-link text-info" href="/register">Sign up</a>
+          </li>
+          <% }  else{%>
+          <li>
+            <a class="nav-link text-danger" href="/logout">Sign out</a>
+          </li>
+          <% } %>
+      </ul>
     </div>
   </nav>
